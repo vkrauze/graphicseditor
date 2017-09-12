@@ -5,18 +5,31 @@ public class Point implements GeometricFigure {
     private int y;
 
     @Override
-    public Integer perimeter() {
+    public double perimeter() {
         return 0;
     }
 
     @Override
-    public Integer area() {
+    public double area() {
         return 0;
     }
 
     @Override
     public String toString() {
         return String.format("Point (%d, %d).", x, y);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Point))
+            return false;
+        Point anotherPoint = (Point) obj;
+        return (x == anotherPoint.x && y == anotherPoint.y);
+    }
+
+    public Point(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
     public int getX() {
