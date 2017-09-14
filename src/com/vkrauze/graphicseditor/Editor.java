@@ -1,22 +1,31 @@
 package com.vkrauze.graphicseditor;
 
+import com.vkrauze.graphicseditor.figures.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Editor {
-
-    private static void line(int x1, int y1, int x2, int y2) {
-        float slope = ((float) y2 - y1) / (x2 - x1);
-        int smallerX = Math.min(x1, x2);
-        int largerX = Math.max(x1, x2);
-        for (int x = smallerX; x <= largerX; x++) {
-            int y = (int) ( slope * (x - x1) + y1 );
-            ScreenContents.setPoint(x, y);
-        }
-    }
-
     public static void main(String[] args) {
-//        for (int x = 0; x < 80; x++) {
-//            ScreenContents.setPoint(x, 0);
-//        }
-        line(0,0, 79, 24);
-        ScreenContents.draw();
+        Screen.clear();
+
+        List<GeometricFigure> figures = new ArrayList<>();
+/*
+        figures.add(new Point(110, 20));
+        figures.add(new Line(5, 5, 100, 10));
+        figures.add(new Line(5, 10, 100, 15));
+        figures.add(new Rectangle(10, 2, 80, 22));
+*/
+        figures.add(new Ellipse(10, 10, 5, 5));
+
+        System.out.println("These geometric figures will be drawn:");
+        for (GeometricFigure figure : figures) {
+            System.out.println(String.format("%s It has perimeter of %.2f and area of %.2f.",
+                    figure.toString(), figure.perimeter(), figure.area()));
+            figure.draw();
+        }
+
+        Screen.show();
     }
 }

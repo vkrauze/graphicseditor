@@ -1,8 +1,14 @@
-package com.vkrauze.graphicseditor;
+package com.vkrauze.graphicseditor.figures;
+
+import com.vkrauze.graphicseditor.Screen;
 
 public class Point implements GeometricFigure {
     private int x;
     private int y;
+
+    public void draw() {
+        Screen.setPoint(x, y);
+    }
 
     @Override
     public double perimeter() {
@@ -16,7 +22,7 @@ public class Point implements GeometricFigure {
 
     @Override
     public String toString() {
-        return String.format("Point (%d, %d).", x, y);
+        return String.format("Point in (%d, %d).", x, y);
     }
 
     @Override

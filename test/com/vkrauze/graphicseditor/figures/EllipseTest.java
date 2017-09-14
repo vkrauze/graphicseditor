@@ -1,8 +1,7 @@
-package com.vkrauze.graphicseditor;
+package com.vkrauze.graphicseditor.figures;
 
+import org.junit.Assert;
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
 
 public class EllipseTest {
 
@@ -14,7 +13,7 @@ public class EllipseTest {
 
         double area = ellipse.area();
 
-        assertEquals("Calculated area must be right up to rounding delta", expectedArea, area, roundingDelta);
+        Assert.assertEquals("Calculated area must be right up to rounding delta", expectedArea, area, roundingDelta);
     }
 
     @Test
@@ -25,7 +24,7 @@ public class EllipseTest {
 
         double perimeter = ellipse.perimeter();
 
-        assertEquals("Calculated perimeter must be right up to rounding delta",
+        Assert.assertEquals("Calculated perimeter must be right up to rounding delta",
                 expectedPerimeter, perimeter, roundingDelta);
     }
 }

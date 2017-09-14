@@ -1,10 +1,17 @@
-package com.vkrauze.graphicseditor;
+package com.vkrauze.graphicseditor.figures;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Rectangle implements GeometricFigure {
     private List<Line> edges;
+
+    @Override
+    public void draw() {
+        for (Line line : edges)
+            line.draw();
+    }
 
     @Override
     public double perimeter() {
@@ -23,12 +30,17 @@ public class Rectangle implements GeometricFigure {
 
     @Override
     public String toString() {
-        return edges.stream()
+        List<Point> corners = edges.stream()
                 .flatMap(line -> line.getEnds().stream())
                 .distinct()
-                .peek(point -> System.out.println("Unique " + point.toString()))
-                .map(Point::toString)
-                .reduce("", String::concat);
+                .collect(Collectors.toList());
+        Point corner1 = corners.get(0);
+        Point corner2 = corners.get(1);
+        Point corner3 = corners.get(2);
+        Point corner4 = corners.get(3);
+        return String.format("Rectangle with corners at (%d, %d), (%d, %d), (%d, %d), (%d, %d).",
+                corner1.getX(), corner1.getY(), corner2.getX(), corner2.getY(),
+                corner3.getX(), corner3.getY(), corner4.getY(), corner4.getY());
     }
 
     public Rectangle(List<Line> edges) {
@@ -37,7 +49,7 @@ public class Rectangle implements GeometricFigure {
 
     public Rectangle(int diagonalX1, int diagonalY1, int diagonalX2, int diagonalY2) {
         Point corner1 = new Point(diagonalX1, diagonalY1);
-        Point corner2 = new Point(diagonalX2, diagonalY2);
+        Point corner2 = new Point(diagonalX2, diagonalY1);
         Point corner3 = new Point(diagonalX2, diagonalY2);
         Point corner4 = new Point(diagonalX1, diagonalY2);
 
