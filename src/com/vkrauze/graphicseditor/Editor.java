@@ -3,7 +3,6 @@ package com.vkrauze.graphicseditor;
 import com.vkrauze.graphicseditor.figures.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Editor {
@@ -11,13 +10,16 @@ public class Editor {
         Screen.clear();
 
         List<GeometricFigure> figures = new ArrayList<>();
-/*
-        figures.add(new Point(110, 20));
-        figures.add(new Line(5, 5, 100, 10));
-        figures.add(new Line(5, 10, 100, 15));
-        figures.add(new Rectangle(10, 2, 80, 22));
-*/
-        figures.add(new Ellipse(10, 10, 5, 5));
+
+        figures.add(new Rectangle(30, 5, 90, 35));
+        figures.add(new Ellipse(45, 25, 7, 3));
+        figures.add(new Ellipse(45, 25, 2, 1));
+        figures.add(new Ellipse(75, 25, 7, 3));
+        figures.add(new Ellipse(75, 25, 2, 1));
+        figures.add(new Line(40, 15, 60, 10));
+        figures.add(new Line(80, 15, 60, 10));
+        figures.add(new Point(55, 20));
+        figures.add(new Point(65, 20));
 
         System.out.println("These geometric figures will be drawn:");
         for (GeometricFigure figure : figures) {
