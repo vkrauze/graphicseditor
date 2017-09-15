@@ -1,14 +1,8 @@
-package com.vkrauze.graphicseditor.figures;
+package com.vkrauze.graphicseditor.figure;
 
-import com.vkrauze.graphicseditor.Screen;
-
-public class Point implements GeometricFigure {
+public class Point extends GeometricFigure {
     private int x;
     private int y;
-
-    public void draw() {
-        Screen.setPoint(x, y);
-    }
 
     @Override
     public double perimeter() {

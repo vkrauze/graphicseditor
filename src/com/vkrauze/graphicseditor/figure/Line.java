@@ -1,35 +1,10 @@
-package com.vkrauze.graphicseditor.figures;
-
-import com.vkrauze.graphicseditor.Screen;
+package com.vkrauze.graphicseditor.figure;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class Line implements GeometricFigure {
+public class Line extends GeometricFigure {
     private List<Point> ends;
-
-    public void draw() {
-        int x1 = ends.get(0).getX();
-        int y1 = ends.get(0).getY();
-        int x2 = ends.get(1).getX();
-        int y2 = ends.get(1).getY();
-
-        if (x1 != x2) {
-            float slope = ((float) y2 - y1) / (x2 - x1);
-            int smallerX = Math.min(x1, x2);
-            int largerX = Math.max(x1, x2);
-            for (int x = smallerX; x <= largerX; x++) {
-                int y = (int) (slope * (x - x1) + y1);
-                Screen.setPoint(x, y);
-            }
-        } else {
-            int smallerY = Math.min(y1, y2);
-            int largerY = Math.max(y1, y2);
-            for (int y = smallerY; y <= largerY; y++) {
-                Screen.setPoint(x1, y);
-            }
-        }
-    }
 
     @Override
     public double perimeter() {

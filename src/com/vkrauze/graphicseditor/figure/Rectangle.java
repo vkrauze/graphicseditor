@@ -1,17 +1,11 @@
-package com.vkrauze.graphicseditor.figures;
+package com.vkrauze.graphicseditor.figure;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Rectangle implements GeometricFigure {
+public class Rectangle extends GeometricFigure {
     private List<Line> edges;
-
-    @Override
-    public void draw() {
-        for (Line line : edges)
-            line.draw();
-    }
 
     @Override
     public double perimeter() {

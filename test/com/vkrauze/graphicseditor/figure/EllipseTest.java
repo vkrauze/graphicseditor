@@ -1,4 +1,4 @@
-package com.vkrauze.graphicseditor.figures;
+package com.vkrauze.graphicseditor.figure;
 
 import org.junit.Assert;
 import org.junit.Test;

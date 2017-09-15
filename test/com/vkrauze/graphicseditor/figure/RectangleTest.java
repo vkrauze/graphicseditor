@@ -1,7 +1,5 @@
-package com.vkrauze.graphicseditor.figures;
+package com.vkrauze.graphicseditor.figure;
 
-import com.vkrauze.graphicseditor.figures.Ellipse;
-import com.vkrauze.graphicseditor.figures.Rectangle;
 import org.junit.Assert;
 import org.junit.Test;
 

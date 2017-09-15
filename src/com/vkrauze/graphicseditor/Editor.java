@@ -1,14 +1,14 @@
 package com.vkrauze.graphicseditor;
 
-import com.vkrauze.graphicseditor.figures.*;
+import com.vkrauze.graphicseditor.figure.*;
+import com.vkrauze.graphicseditor.display.Display;
+import com.vkrauze.graphicseditor.display.TextModeDisplay;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Editor {
     public static void main(String[] args) {
-        Screen.clear();
-
         List<GeometricFigure> figures = new ArrayList<>();
 
         figures.add(new Rectangle(30, 5, 90, 35));
@@ -21,13 +21,14 @@ public class Editor {
         figures.add(new Point(55, 20));
         figures.add(new Point(65, 20));
 
-        System.out.println("These geometric figures will be drawn:");
+        System.out.println("These geometric figure will be drawn:");
         for (GeometricFigure figure : figures) {
             System.out.println(String.format("%s It has perimeter of %.2f and area of %.2f.",
                     figure.toString(), figure.perimeter(), figure.area()));
-            figure.draw();
         }
 
-        Screen.show();
+        Display display = new TextModeDisplay();
+        display.setFigures(figures);
+        display.render();
     }
 }
