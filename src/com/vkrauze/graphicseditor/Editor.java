@@ -1,5 +1,6 @@
 package com.vkrauze.graphicseditor;
 
+import com.vkrauze.graphicseditor.display.GraphicsDisplay;
 import com.vkrauze.graphicseditor.figure.*;
 import com.vkrauze.graphicseditor.display.Display;
 import com.vkrauze.graphicseditor.display.TextModeDisplay;
@@ -27,7 +28,11 @@ public class Editor {
                     figure.toString(), figure.perimeter(), figure.area()));
         }
 
-        Display display = new TextModeDisplay();
+  /*      Display display = new TextModeDisplay();
+        display.setFigures(figures);
+        display.render();*/
+
+        Display display = new GraphicsDisplay();
         display.setFigures(figures);
         display.render();
     }
