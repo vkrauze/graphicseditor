@@ -2,20 +2,42 @@ package com.vkrauze.graphicseditor.display;
 
 import com.vkrauze.graphicseditor.figure.*;
 
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.Collections;
 
 public class TextModeDisplay extends Display {
-    private static final int SCREEN_WIDTH = 120;
-    private static final int SCREEN_HEIGHT = 40;
-    private static final char SET_PIXEL = 0x2588;      // set IntelliJ console font to Courier to see this symbol properly
-    private static final char CLEAR_PIXEL = ' ';
-    private static final char BORDER_PIXEL = '#';
+    private int screenWidth = 120;
+    private int screenHeight = 40;
 
-    private static char[][] pixels = new char[SCREEN_HEIGHT][SCREEN_WIDTH];
+    private static final char SET_PIXEL = '*';      // set IntelliJ console font to Courier to see this symbol properly
+    private static final char CLEAR_PIXEL = ' ';
+    private static final char BORDER_PIXEL = '+';
+
+    private char[][] pixels;
+
+    private OutputStream outputStream = System.out;
+
+    public void setOutputStream(OutputStream outputStream) {
+        this.outputStream = outputStream;
+    }
+
+    public OutputStream getOutputStream() {
+        return outputStream;
+    }
+
+    public void setScreenWidth(int screenWidth) {
+        this.screenWidth = screenWidth;
+    }
+
+    public void setScreenHeight(int screenHeight) {
+        this.screenHeight = screenHeight;
+    }
 
     @Override
     public void render() {
+        pixels = new char[screenHeight][screenWidth];
         clear();
         for (GeometricFigure figure : figures)
             if (figure instanceof Point)
@@ -35,7 +57,7 @@ public class TextModeDisplay extends Display {
     }
 
     private void renderPoint(Point point) {
-        setPoint(point.getX(), point.getY());
+        setPixel(point.getX(), point.getY());
     }
 
     private void renderLine(Line line) {
@@ -50,13 +72,13 @@ public class TextModeDisplay extends Display {
             int largerX = Math.max(x1, x2);
             for (int x = smallerX; x <= largerX; x++) {
                 int y = (int) (slope * (x - x1) + y1);
-                setPoint(x, y);
+                setPixel(x, y);
             }
         } else {
             int smallerY = Math.min(y1, y2);
             int largerY = Math.max(y1, y2);
             for (int y = smallerY; y <= largerY; y++) {
-                setPoint(x1, y);
+                setPixel(x1, y);
             }
         }
     }
@@ -74,32 +96,33 @@ public class TextModeDisplay extends Display {
 
         for (int x = -halfAxisX; x <= +halfAxisX; x++) {
             if (x == -halfAxisX || x == +halfAxisX)
-                setPoint(x + centerX, centerY);
+                setPixel(x + centerX, centerY);
             else {
                 int y = (int) Math.round(Math.sqrt(
                         Math.pow(halfAxisY, 2) * (1 - Math.pow(x, 2) / Math.pow(halfAxisX, 2))
                 ));
                 int y1 = +y;
                 int y2 = -y;
-                setPoint(x + centerX, y1 + centerY);
-                setPoint(x + centerX, y2 + centerY);
+                setPixel(x + centerX, y1 + centerY);
+                setPixel(x + centerX, y2 + centerY);
             }
         }
     }
 
-    private static void setPoint(int x, int y) {
-        if ((x < 0) || (x >= SCREEN_WIDTH))
-            throw new RuntimeException(String.format("Wrong X value '%d', must be between 0 and %d inclusive.", x, SCREEN_WIDTH - 1));
-        if ((y < 0) || (y >= SCREEN_HEIGHT))
-            throw new RuntimeException(String.format("Wrong Y value '%d', must be between 0 and %d inclusive.", y, SCREEN_HEIGHT - 1));
+    private void setPixel(int x, int y) {
+        if ((x < 0) || (x >= screenWidth))
+            throw new RuntimeException(String.format("Wrong X value '%d', must be between 0 and %d inclusive.", x, screenWidth - 1));
+        if ((y < 0) || (y >= screenHeight))
+            throw new RuntimeException(String.format("Wrong Y value '%d', must be between 0 and %d inclusive.", y, screenHeight - 1));
         pixels[y][x] = SET_PIXEL;
     }
 
     private void show() {
-        String horizontalLine = String.join("", Collections.nCopies(SCREEN_WIDTH + 2, String.valueOf(BORDER_PIXEL)));
-        System.out.println(horizontalLine);
-        for (int y = SCREEN_HEIGHT - 1; y >= 0; y--)
-            System.out.println(BORDER_PIXEL + new String(pixels[y]) + BORDER_PIXEL);
-        System.out.println(horizontalLine);
+        String horizontalLine = String.join("", Collections.nCopies(screenWidth + 2, String.valueOf(BORDER_PIXEL)));
+        PrintStream printStream = new PrintStream(outputStream);
+        printStream.println(horizontalLine);
+        for (int y = screenHeight - 1; y >= 0; y--)
+            printStream.println(BORDER_PIXEL + new String(pixels[y]) + BORDER_PIXEL);
+        printStream.println(horizontalLine);
     }
 }

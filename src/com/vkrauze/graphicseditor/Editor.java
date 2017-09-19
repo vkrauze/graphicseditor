@@ -28,12 +28,12 @@ public class Editor {
                     figure.toString(), figure.perimeter(), figure.area()));
         }
 
-  /*      Display display = new TextModeDisplay();
-        display.setFigures(figures);
-        display.render();*/
-
-        Display display = new GraphicsDisplay();
+        Display display = new TextModeDisplay();
         display.setFigures(figures);
         display.render();
+
+/*        Display display = new GraphicsDisplay();
+        display.setFigures(figures);
+        display.render();*/
     }
 }
