@@ -1,6 +1,10 @@
 package com.vkrauze.graphicseditor.display;
 
+import com.vkrauze.graphicseditor.figure.Ellipse;
 import com.vkrauze.graphicseditor.figure.GeometricFigure;
+import com.vkrauze.graphicseditor.figure.Line;
+import com.vkrauze.graphicseditor.figure.Point;
+import com.vkrauze.graphicseditor.figure.Rectangle;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,9 +27,7 @@ public class GraphicsDisplay extends JFrame implements Display {
         // Run the GUI codes on the Event-Dispatching thread for thread safety
         SwingUtilities.invokeLater(() -> {
             // set up the GUI components and event handlers
-//            GraphicsCanvas canvas = new GraphicsCanvas();    // Construct the drawing canvas
-            GraphicsCanvas canvas = new GraphicsCanvas(figures);    // Construct the drawing canvas
-
+            GraphicsCanvas canvas = new GraphicsCanvas();    // Construct the drawing canvas
             canvas.setPreferredSize(new Dimension(CANVAS_WIDTH, CANVAS_HEIGHT));
             // Set the Drawing JPanel as the JFrame's content-pane
             Container cp = getContentPane();
@@ -34,22 +36,6 @@ public class GraphicsDisplay extends JFrame implements Display {
             pack();              // Either pack() the components; or setSize()
             setVisible(true);    // "super" JFrame show
         });
-/*
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                // set up the GUI components and event handlers
-                GraphicsCanvas canvas = new GraphicsCanvas();    // Construct the drawing canvas
-                canvas.setPreferredSize(new Dimension(CANVAS_WIDTH, CANVAS_HEIGHT));
-                // Set the Drawing JPanel as the JFrame's content-pane
-                Container cp = getContentPane();
-                cp.add(canvas);
-                setDefaultCloseOperation(EXIT_ON_CLOSE);   // Handle the CLOSE button
-                pack();              // Either pack() the components; or setSize()
-                setVisible(true);    // "super" JFrame show
-            }
-        });
-*/
     }
 
     @Override
@@ -60,5 +46,29 @@ public class GraphicsDisplay extends JFrame implements Display {
     @Override
     public void setFigures(List<GeometricFigure> figures) {
         this.figures = figures;
+    }
+
+    /**
+     * Define inner class GraphicsCanvas, which is a JPanel used for custom drawing.
+     */
+    private class GraphicsCanvas extends JPanel {
+        // Override paintComponent to perform your own painting
+        Graphics graphics;
+
+        @Override
+        public void paintComponent(Graphics passedGraphics) {
+            this.graphics = passedGraphics;
+
+            super.paintComponent(graphics);     // paint parent's background
+            setBackground(Color.BLACK);  // set background color for this JPanel
+            graphics.setColor(Color.WHITE);
+
+            GraphicsData graphicsData = new GraphicsData(figures);
+            graphicsData.setGraphics(graphics);
+            graphicsData.setCanvasWidth(CANVAS_WIDTH);
+            graphicsData.setCanvasHeight(CANVAS_HEIGHT);
+            graphicsData.processFigures();
+        }
+
     }
 }

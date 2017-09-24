@@ -4,29 +4,35 @@ import com.vkrauze.graphicseditor.figure.Ellipse;
 import com.vkrauze.graphicseditor.figure.GeometricFigure;
 import com.vkrauze.graphicseditor.figure.Line;
 
-import javax.swing.*;
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class GraphicsCanvas extends JPanel {
+class GraphicsData {
     private java.util.List<GeometricFigure> figures = new ArrayList<>();
 
-    private static final int CANVAS_HEIGHT = 480;
-    // Override paintComponent to perform your own painting
     private Graphics graphics;
 
-    GraphicsCanvas(java.util.List<GeometricFigure> figures) {
+    private int canvasWidth = 640;
+    private int canvasHeight = 480;
+
+    GraphicsData(List<GeometricFigure> figures) {
         this.figures = figures;
     }
 
-    @Override
-    public void paintComponent(Graphics graphics) {
+    void setGraphics(Graphics graphics) {
         this.graphics = graphics;
+    }
 
-        super.paintComponent(graphics);     // paint parent's background
-        setBackground(Color.BLACK);  // set background color for this JPanel
-        graphics.setColor(Color.WHITE);
+    void setCanvasWidth(int canvasWidth) {
+        this.canvasWidth = canvasWidth;
+    }
 
+    void setCanvasHeight(int canvasHeight) {
+        this.canvasHeight = canvasHeight;
+    }
+
+    void processFigures() {
         for (GeometricFigure figure : figures)
             if (figure instanceof com.vkrauze.graphicseditor.figure.Point)
                 renderPoint((com.vkrauze.graphicseditor.figure.Point) figure);
@@ -64,6 +70,6 @@ public class GraphicsCanvas extends JPanel {
     }
 
     private int convertToYFromTop(int y) {
-        return CANVAS_HEIGHT - y;
+        return canvasHeight - y;
     }
 }
