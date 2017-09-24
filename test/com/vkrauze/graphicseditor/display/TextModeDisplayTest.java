@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
+import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -18,9 +19,8 @@ public class TextModeDisplayTest {
         String expected = getExpectedString();
         TextModeDisplay display = getTextModeDisplay();
         Line lineMock = createLineMock();
-        display.addFigure(lineMock);
-
-        display.render();
+//        display.addFigure(lineMock);
+        display.render(Collections.singletonList(lineMock));
 
         OutputStream out = display.getOutputStream();
         byte[] outputBytes = ((ByteArrayOutputStream) out).toByteArray();

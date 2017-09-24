@@ -10,37 +10,19 @@ import java.util.Collections;
 import java.util.List;
 
 public class TextModeDisplay implements Display {
-    private List<GeometricFigure> figures = new ArrayList<>();
+    private static final char SET_PIXEL = '*';
+    private static final char CLEAR_PIXEL = ' ';
+    private static final char BORDER_PIXEL = '+';
 
     private int canvasWidth = 120;
     private int canvasHeight = 40;
-
-    private static final char SET_PIXEL = '*';      // set IntelliJ console font to Courier to see this symbol properly
-    private static final char CLEAR_PIXEL = ' ';
-    private static final char BORDER_PIXEL = '+';
 
     private char[][] pixels;
 
     private OutputStream outputStream = System.out;
 
-    public void setOutputStream(OutputStream outputStream) {
-        this.outputStream = outputStream;
-    }
-
-    public OutputStream getOutputStream() {
-        return outputStream;
-    }
-
-    public void setCanvasWidth(int canvasWidth) {
-        this.canvasWidth = canvasWidth;
-    }
-
-    public void setCanvasHeight(int canvasHeight) {
-        this.canvasHeight = canvasHeight;
-    }
-
     @Override
-    public void render() {
+    public void render(List<GeometricFigure> figures) {
         pixels = new char[canvasHeight][canvasWidth];
         clear();
         for (GeometricFigure figure : figures)
@@ -52,17 +34,9 @@ public class TextModeDisplay implements Display {
                 renderRectangle((Rectangle) figure);
             else if (figure instanceof Ellipse)
                 renderEllipse((Ellipse) figure);
+            else
+                throw new RuntimeException("Got figure of unknown type: " + figure.toString());
         show();
-    }
-
-    @Override
-    public void addFigure(GeometricFigure figure) {
-        figures.add(figure);
-    }
-
-    @Override
-    public void setFigures(List<GeometricFigure> figures) {
-        this.figures = figures;
     }
 
     private void clear() {
@@ -124,10 +98,11 @@ public class TextModeDisplay implements Display {
     }
 
     private void setPixel(int x, int y) {
+        String errorMsg = "Wrong %s = '%d' value get when calculating output, must be between 0 and %d inclusive.";
         if ((x < 0) || (x >= canvasWidth))
-            throw new RuntimeException(String.format("Wrong X value '%d', must be between 0 and %d inclusive.", x, canvasWidth - 1));
+            throw new RuntimeException(String.format(errorMsg, "X", x, canvasWidth - 1));
         if ((y < 0) || (y >= canvasHeight))
-            throw new RuntimeException(String.format("Wrong Y value '%d', must be between 0 and %d inclusive.", y, canvasHeight - 1));
+            throw new RuntimeException(String.format(errorMsg, "Y", y, canvasHeight - 1));
         pixels[y][x] = SET_PIXEL;
     }
 
@@ -138,5 +113,21 @@ public class TextModeDisplay implements Display {
         for (int y = canvasHeight - 1; y >= 0; y--)
             printStream.println(BORDER_PIXEL + new String(pixels[y]) + BORDER_PIXEL);
         printStream.println(horizontalLine);
+    }
+
+    public void setOutputStream(OutputStream outputStream) {
+        this.outputStream = outputStream;
+    }
+
+    public OutputStream getOutputStream() {
+        return outputStream;
+    }
+
+    public void setCanvasWidth(int canvasWidth) {
+        this.canvasWidth = canvasWidth;
+    }
+
+    public void setCanvasHeight(int canvasHeight) {
+        this.canvasHeight = canvasHeight;
     }
 }

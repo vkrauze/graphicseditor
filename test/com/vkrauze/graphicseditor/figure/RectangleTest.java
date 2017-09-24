@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
 public class RectangleTest {
 
     @Test
-    public void areaOfTwoByTwoRectangleIsRight() {
+    public void testAreaOfTwoByTwoRectangleIsRight() {
         Rectangle rectangle = new Rectangle(0, 0, 2, 2);
 
 
@@ -22,7 +22,7 @@ public class RectangleTest {
     }
 
     @Test
-    public void perimeterOfTwoByTwoEllipseIsRight() {
+    public void testPerimeterOfTwoByTwoEllipseIsRight() {
         Ellipse ellipse = new Ellipse(0, 0, 1, 1);
         double expectedPerimeter = 6.28;
         double roundingDelta = 0.01;

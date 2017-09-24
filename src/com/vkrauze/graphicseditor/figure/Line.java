@@ -23,7 +23,7 @@ public class Line extends GeometricFigure {
                 ends.get(1).getX(), ends.get(1).getY());
     }
 
-    public double length() {
+    double length() {
         double edge1 = (double) ends.get(0).getX() - ends.get(1).getX();
         double edge2 = (double) ends.get(0).getY() - ends.get(1).getY();
         return Math.sqrt(Math.pow(edge1, 2) + Math.pow(edge2, 2));
@@ -40,9 +40,4 @@ public class Line extends GeometricFigure {
     public List<Point> getEnds() {
         return ends;
     }
-
-    public void setEnds(List<Point> ends) {
-        this.ends = ends;
-    }
-
 }

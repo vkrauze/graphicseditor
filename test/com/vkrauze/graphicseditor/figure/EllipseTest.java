@@ -6,7 +6,7 @@ import org.junit.Test;
 public class EllipseTest {
 
     @Test
-    public void areaOfTwoByTwoEllipseIsRight() {
+    public void testAreaOfTwoByTwoEllipseIsRight() {
         Ellipse ellipse = new Ellipse(0, 0, 1, 1);
         double expectedArea = 3.14;
         double roundingDelta = 0.01;
@@ -17,7 +17,7 @@ public class EllipseTest {
     }
 
     @Test
-    public void perimeterOfTwoByTwoEllipseIsRight() {
+    public void testPerimeterOfTwoByTwoEllipseIsRight() {
         Ellipse ellipse = new Ellipse(0, 0, 1, 1);
         double expectedPerimeter = 6.28;
         double roundingDelta = 0.01;
