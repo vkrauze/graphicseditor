@@ -14,7 +14,7 @@ import static org.mockito.Mockito.when;
 
 public class TextModeDisplayTest {
     @Test
-    public void lineOutputRight() {
+    public void testLineOutputIsRight() {
         String expected = getExpectedString();
         TextModeDisplay display = getTextModeDisplay();
         Line lineMock = createLineMock();
@@ -43,8 +43,8 @@ public class TextModeDisplayTest {
         TextModeDisplay display = new TextModeDisplay();
         OutputStream out = new ByteArrayOutputStream();
         display.setOutputStream(out);
-        display.setScreenHeight(3);
-        display.setScreenWidth(3);
+        display.setCanvasHeight(3);
+        display.setCanvasWidth(3);
         return display;
     }
 

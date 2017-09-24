@@ -1,9 +1,9 @@
 package com.vkrauze.graphicseditor;
 
-import com.vkrauze.graphicseditor.display.GraphicsDisplay;
-import com.vkrauze.graphicseditor.figure.*;
 import com.vkrauze.graphicseditor.display.Display;
+import com.vkrauze.graphicseditor.display.GraphicsDisplay;
 import com.vkrauze.graphicseditor.display.TextModeDisplay;
+import com.vkrauze.graphicseditor.figure.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +32,8 @@ public class Editor {
         display.setFigures(figures);
         display.render();
 
-/*        Display display = new GraphicsDisplay();
+        display = new GraphicsDisplay();
         display.setFigures(figures);
-        display.render();*/
+        display.render();
     }
 }

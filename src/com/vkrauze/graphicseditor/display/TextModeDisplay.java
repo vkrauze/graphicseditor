@@ -4,12 +4,16 @@ import com.vkrauze.graphicseditor.figure.*;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
-public class TextModeDisplay extends Display {
-    private int screenWidth = 120;
-    private int screenHeight = 40;
+public class TextModeDisplay implements Display {
+    private List<GeometricFigure> figures = new ArrayList<>();
+
+    private int canvasWidth = 120;
+    private int canvasHeight = 40;
 
     private static final char SET_PIXEL = '*';      // set IntelliJ console font to Courier to see this symbol properly
     private static final char CLEAR_PIXEL = ' ';
@@ -27,17 +31,17 @@ public class TextModeDisplay extends Display {
         return outputStream;
     }
 
-    public void setScreenWidth(int screenWidth) {
-        this.screenWidth = screenWidth;
+    public void setCanvasWidth(int canvasWidth) {
+        this.canvasWidth = canvasWidth;
     }
 
-    public void setScreenHeight(int screenHeight) {
-        this.screenHeight = screenHeight;
+    public void setCanvasHeight(int canvasHeight) {
+        this.canvasHeight = canvasHeight;
     }
 
     @Override
     public void render() {
-        pixels = new char[screenHeight][screenWidth];
+        pixels = new char[canvasHeight][canvasWidth];
         clear();
         for (GeometricFigure figure : figures)
             if (figure instanceof Point)
@@ -49,6 +53,16 @@ public class TextModeDisplay extends Display {
             else if (figure instanceof Ellipse)
                 renderEllipse((Ellipse) figure);
         show();
+    }
+
+    @Override
+    public void addFigure(GeometricFigure figure) {
+        figures.add(figure);
+    }
+
+    @Override
+    public void setFigures(List<GeometricFigure> figures) {
+        this.figures = figures;
     }
 
     private void clear() {
@@ -110,18 +124,18 @@ public class TextModeDisplay extends Display {
     }
 
     private void setPixel(int x, int y) {
-        if ((x < 0) || (x >= screenWidth))
-            throw new RuntimeException(String.format("Wrong X value '%d', must be between 0 and %d inclusive.", x, screenWidth - 1));
-        if ((y < 0) || (y >= screenHeight))
-            throw new RuntimeException(String.format("Wrong Y value '%d', must be between 0 and %d inclusive.", y, screenHeight - 1));
+        if ((x < 0) || (x >= canvasWidth))
+            throw new RuntimeException(String.format("Wrong X value '%d', must be between 0 and %d inclusive.", x, canvasWidth - 1));
+        if ((y < 0) || (y >= canvasHeight))
+            throw new RuntimeException(String.format("Wrong Y value '%d', must be between 0 and %d inclusive.", y, canvasHeight - 1));
         pixels[y][x] = SET_PIXEL;
     }
 
     private void show() {
-        String horizontalLine = String.join("", Collections.nCopies(screenWidth + 2, String.valueOf(BORDER_PIXEL)));
+        String horizontalLine = String.join("", Collections.nCopies(canvasWidth + 2, String.valueOf(BORDER_PIXEL)));
         PrintStream printStream = new PrintStream(outputStream);
         printStream.println(horizontalLine);
-        for (int y = screenHeight - 1; y >= 0; y--)
+        for (int y = canvasHeight - 1; y >= 0; y--)
             printStream.println(BORDER_PIXEL + new String(pixels[y]) + BORDER_PIXEL);
         printStream.println(horizontalLine);
     }
