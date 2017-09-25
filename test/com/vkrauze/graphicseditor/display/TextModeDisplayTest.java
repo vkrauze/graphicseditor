@@ -1,5 +1,6 @@
 package com.vkrauze.graphicseditor.display;
 
+import com.vkrauze.graphicseditor.figure.GeometricFigure;
 import com.vkrauze.graphicseditor.figure.Line;
 import com.vkrauze.graphicseditor.figure.Point;
 import org.junit.Test;
@@ -8,10 +9,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class TextModeDisplayTest {
     @Test
@@ -19,7 +20,7 @@ public class TextModeDisplayTest {
         String expected = getExpectedString();
         TextModeDisplay display = getTextModeDisplay();
         Line lineMock = createLineMock();
-//        display.addFigure(lineMock);
+
         display.render(Collections.singletonList(lineMock));
 
         OutputStream out = display.getOutputStream();
@@ -61,5 +62,15 @@ public class TextModeDisplayTest {
         when(lineMock.getEnds())
                 .thenReturn(Arrays.asList(pointMock, pointMock));
         return lineMock;
+    }
+
+    @Test
+    public void testCallsMethodsOfFigures() {
+        TextModeDisplay display = getTextModeDisplay();
+        Line lineMock = createLineMock();
+
+        display.render(Collections.singletonList(lineMock));
+
+        verify(lineMock, times(4)).getEnds();
     }
 }
