@@ -1,9 +1,12 @@
 package com.vkrauze.graphicseditor.display;
 
 import com.vkrauze.graphicseditor.figure.GeometricFigure;
+import com.vkrauze.graphicseditor.figure.Point;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 /**
@@ -38,6 +41,18 @@ public class GraphicsDisplay extends JFrame implements Display {
     private class GraphicsCanvas extends JPanel {
         Graphics graphics;
 
+        GraphicsCanvas() {
+            Timer timer = new Timer(40, e -> repaint());
+            timer.start();
+        }
+
+        private void movePoint(Point point) {
+            if (point.getY() > CANVAS_HEIGHT)
+                point.setY(0);
+            else
+                point.setY(point.getY() + 1);
+        }
+
         // Override paintComponent to perform your own painting
         @Override
         public void paintComponent(Graphics passedGraphics) {
@@ -48,6 +63,10 @@ public class GraphicsDisplay extends JFrame implements Display {
             graphics.setColor(Color.WHITE);
 
             GraphicsData graphicsData = new GraphicsData(figures);
+
+            movePoint((Point) figures.get(7));
+            movePoint((Point) figures.get(8));
+
             graphicsData.setCanvasWidth(CANVAS_WIDTH);
             graphicsData.setCanvasHeight(CANVAS_HEIGHT);
             graphicsData.processFigures(graphics);
